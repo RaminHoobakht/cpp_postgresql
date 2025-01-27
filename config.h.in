@@ -1,0 +1,2 @@
+#define cpp_postgresql_VERSION_MAJOR @cpp_postgresql_VERSION_MAJOR@
+#define cpp_postgresql_VERSION_MINOR @cpp_postgresql_VERSION_MINOR@
