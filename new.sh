@@ -12,12 +12,13 @@ mv src/app/main.cpp archive/main_"$fileno".cpp
 
 now="$(date +"%T")"
 
-printf '%s\n' "#include <iostream>
+printf '%s\n' "/*  */
 
-#define NL '\n'
+#include \"../header/utillib.hpp\"
+#include <iostream>
+
 
 int main() {
-
 
 
     std::cout << \"\n #($now): The End ...\" << std::endl;

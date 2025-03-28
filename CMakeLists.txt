@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-set(CMAKE_PROJECT_NAME cpp_postgresql)
+set(CMAKE_PROJECT_NAME cpp_result)
 set(CMAKE_PROJECT_VERSION 1)
 set(CMAKE_PROJECT_VERSION_MAJOR 0)
 set(CMAKE_PROJECT_VERSION_MINOR 1)
@@ -8,20 +8,20 @@ set(CMAKE_PROJECT_DESCRIPTION "training C++")
 
 set(CMAKE_TOOLCHAIN_FILE "")
 
-project (
+project(
         ${CMAKE_PROJECT_NAME}
         VERSION ${CMAKE_PROJECT_VERSION_MAJOR}.${CMAKE_PROJECT_VERSION_MINOR}
         LANGUAGES CXX C ASM
         DESCRIPTION ${CMAKE_PROJECT_DESCRIPTION})
 
-    #set(CMAKE_C_COMPILER "/usr/bin/gcc-14")
-    #set(CMAKE_CXX_COMPILER "/usr/bin/g++-14")
+#set(CMAKE_C_COMPILER "/usr/bin/gcc-14")
+#set(CMAKE_CXX_COMPILER "/usr/bin/g++-14")
 
 set(CMAKE_C_STANDARD 23)
 set(CMAKE_C_STANDARD_DEFAULT 23)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 26)
 set(CMAKE_CXX_STANDARD_DEFAULT 26)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -50,23 +50,27 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wpadded -Wpointer-arith -Wmissing-noret
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -v -fPIC -fPIE -m64 -march=corei7-avx  ")
 
-add_executable(${CMAKE_PROJECT_NAME} 
+add_executable(${CMAKE_PROJECT_NAME}
         src/app/main.cpp
+        src/header/utillib.hpp
+        src/header/utillib.cpp
+        src/header/test.hpp
+        src/header/test.cpp
 )
 
 # This project will output an static library file
-# add_library(${CMAKE_PROJECT_NAME} STATIC 
-#     src/app/library.h    
+# add_library(${CMAKE_PROJECT_NAME} STATIC
+#     src/app/library.h
 #     src/app/library.c
 # )
 
 # Create a simple configuration header
 #configure_file(config.h.in config.h)
 
-#target_link_libraries(${PROJECT_NAME} 
-#        PUBLIC 
-#        Poco::Foundation 
-#        Poco::JSON 
+#target_link_libraries(${PROJECT_NAME}
+#        PUBLIC
+#        Poco::Foundation
+#        Poco::JSON
 #        Poco::Net
 #        Poco::XML
 #        Poco::Util
@@ -84,10 +88,10 @@ add_executable(${CMAKE_PROJECT_NAME}
 #        # Poco::DataPostgreSQL
 #)
 
-#find_package(Poco REQUIRED 
-#        COMPONENTS 
-#        Foundation 
-#        JSON 
+#find_package(Poco REQUIRED
+#        COMPONENTS
+#        Foundation
+#        JSON
 #        Net
 #        XML
 #        Util
@@ -107,24 +111,24 @@ add_executable(${CMAKE_PROJECT_NAME}
 
 
 find_library(MATH_LIBRARY m)
-if(MATH_LIBRARY)
-  target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC ${MATH_LIBRARY})
-endif()
+if (MATH_LIBRARY)
+    target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC ${MATH_LIBRARY})
+endif ()
 
 find_library(CURL_LIBRARY curl)
-if(CURL_LIBRARY)
-  target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC ${CURL_LIBRARY})
-endif()
+if (CURL_LIBRARY)
+    target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC ${CURL_LIBRARY})
+endif ()
 
 find_library(PQ_LIBRARY pq)
-if(PQ_LIBRARY)
+if (PQ_LIBRARY)
     target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC ${PQ_LIBRARY})
-endif()
+endif ()
 
 find_library(PQX_LIBRARY pqxx)
-if(PQX_LIBRARY)
+if (PQX_LIBRARY)
     target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC ${PQX_LIBRARY})
-endif()
+endif ()
 
 find_package(Python3 COMPONENTS Interpreter Development)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Python3::Python)
@@ -137,8 +141,8 @@ target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC "${PROJECT_BINARY_DIR}")
 
 include(GNUInstallDirs)
 install(
-  TARGETS ${CMAKE_PROJECT_NAME}
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+        TARGETS ${CMAKE_PROJECT_NAME}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 
